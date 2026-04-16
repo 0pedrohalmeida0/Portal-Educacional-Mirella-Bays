@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.disabled = true;
         messageArea.innerText = "";
 
-        // 2. Verificação rápida: Admin (Mirella)
+        // 2. Loga no Admin (Mirella)
         if (user === "Mirella.bays" && pass === "bays123") {
             localStorage.setItem("usuarioLogado", "Mirella");
             localStorage.setItem("tipoUsuario", "admin");
@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const resultado = await response.json();
 
             if (resultado.sucesso) {
-                // AQUI ESTÁ O PULO DO GATO: Salvando os dados no navegador
                 localStorage.setItem("usuarioLogado", user);
                 localStorage.setItem("nivelLogado", resultado.nivel || "A1");
                 localStorage.setItem("tipoUsuario", "aluno");
