@@ -167,7 +167,7 @@ async function agendarAula() {
     }
 }
 
-// 8. EXCLUIR USUÁRIO (Cuidado!)
+// 8. EXCLUIR USUÁRIO 
 async function excluirUsuario() {
     if (!alunoSelecionado) return;
     
@@ -205,7 +205,7 @@ async function carregarAgendaGeral() {
             return;
         }
 
-        // Ordenar por data (opcional, mas ajuda a Mirella se organizar)
+        // Ordenar por data 
         aulas.sort((a, b) => new Date(a[1]) - new Date(b[1]));
 
         let html = '<table class="tabela-agenda">';
@@ -229,7 +229,6 @@ async function carregarAgendaGeral() {
     }
 }
 
-// ATUALIZE sua função mostrarAba para incluir essa chamada:
 function mostrarAba(idAba) {
     document.querySelectorAll('.tab-content').forEach(aba => {
         aba.style.display = 'none';
