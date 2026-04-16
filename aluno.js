@@ -29,15 +29,19 @@ async function carregarPortal() {
         const dados = await response.json();
 
         // Preenche o Mural
-        const mural = document.getElementById('conteudo-mural');
-        if (mural && dados.mural) {
-            mural.innerHTML = dados.mural.reverse().map(p => `
-                <div class="post-it">
-                    <p>${p[1]}</p>
-                    <small>${new Date(p[2]).toLocaleDateString()}</small>
-                </div>
-            `).join('');
-        }
+        mural.innerHTML = dados.mural.reverse().map(p => {
+    // p[2] é a data que vem do Google
+    const dataISO = p[2].toString().substring(0, 10);
+    const [ano, mes, dia] = dataISO.split('-');
+    const dataFormatada = `${dia}/${mes}/${ano}`;
+
+    return `
+        <div class="post-it">
+            <p>${p[1]}</p>
+            <small>${dataFormatada}</small>
+        </div>
+    `;
+}).join('');
 
         // Preenche a Agenda
         const agenda = document.getElementById('minha-agenda');
