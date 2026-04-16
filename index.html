@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Portal Mirella Bays</title>
+    <link rel="stylesheet" href="login-style.css">
+</head>
+<body>
+
+    <main class="login-container">
+        <section class="login-card">
+            <header>
+                <h1>Willkommen</h1>
+                <p>Digite seu usuário para acessar</p>
+            </header>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" placeholder="Ex: mirella_bays" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="btn-login">Entrar</button>
+            </form>
+            
+            <div id="login-message"></div>
+        </section>
+    </main>
+
+    <script src="login.js"></script>
+</body>
+</html>

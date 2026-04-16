@@ -1,0 +1,214 @@
+/* Configurações Globais */
+:root {
+    --preto: #1a1a1a;
+    --vermelho: #DD0000;
+    --ouro: #FFCE00;
+    --branco: #ffffff;
+    --cinza-claro: #f4f4f4;
+    --cinza-texto: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--cinza-claro);
+    color: var(--cinza-texto);
+    margin: 0;
+    padding: 0;
+}
+
+.admin-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Menu de Navegação */
+.admin-nav {
+    background-color: var(--preto);
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    border-bottom: 5px solid var(--vermelho);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-nav button {
+    background: transparent;
+    color: var(--branco);
+    border: 2px solid var(--ouro);
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.admin-nav button:hover {
+    background-color: var(--ouro);
+    color: var(--preto);
+}
+
+/* Área de Conteúdo */
+.admin-content {
+    padding: 30px;
+    background-color: var(--branco);
+    min-height: 80vh;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+h2, h3, h4 {
+    color: var(--preto);
+    border-left: 5px solid var(--vermelho);
+    padding-left: 15px;
+    margin-bottom: 25px;
+}
+
+/* Formulários */
+.field {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.field label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.btn-save {
+    background-color: var(--preto);
+    color: var(--ouro);
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-save:hover {
+    background-color: #333;
+}
+
+/* Listagem de Alunos (Cards) */
+#container-lista-alunos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.aluno-card {
+    background: var(--branco);
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.aluno-card:hover {
+    border-color: var(--vermelho);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Área de Detalhes (O que abre ao clicar no aluno) */
+.detalhes-container {
+    background-color: #fff9e6; /* Um tom de ouro bem clarinho para destacar */
+    padding: 25px;
+    border: 2px solid var(--ouro);
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.acoes-admin, .mural-gestao, .agenda-gestao {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.btn-danger {
+    background-color: var(--vermelho);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+/* Agenda Geral */
+#calendario-admin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-agenda {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #fdfdfd;
+    border-bottom: 2px solid var(--cinza-claro);
+}
+.lista-botoes-alunos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-aluno-item {
+    padding: 12px;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.btn-aluno-item:hover {
+    background: #e0e0e0;
+    border-color: #bbb;
+}
+.tabela-agenda {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tabela-agenda th, .tabela-agenda td {
+    padding: 12px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+.tabela-agenda th {
+    background-color: #333;
+    color: white;
+}
+
+.tabela-agenda tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

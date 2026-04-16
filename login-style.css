@@ -1,0 +1,111 @@
+:root {
+    /* Um vermelho mais sofisticado e menos "alerta" */
+    --primary-red: #a82828; 
+    --dark-red: #7a1d1d;
+    --bg-color: #f4f7f6;
+    --white: #ffffff;
+}
+
+/* Reset básico para garantir que nada empurre o conteúdo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%; /* Fundamental para a centralização */
+    font-family: 'Segoe UI', sans-serif;
+    /* Aplicando o fundo vermelho de forma suave */
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+    background-attachment: fixed;
+}
+
+/* CENTRALIZAR */
+.login-container {
+    display: flex;
+    justify-content: center; /* Centraliza na horizontal */
+    align-items: center;     /* Centraliza na vertical */
+    min-height: 100vh;      /* Garante que ocupe a altura toda da tela */
+    padding: 20px;
+}
+
+.login-card {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Estilo do Título */
+header h1 {
+    color: var(--primary-red);
+    font-size: 24px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+header p {
+    color: #636e72;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* Campos de Entrada */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #2d3436;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--primary-red);
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: var(--dark-red);
+    transform: translateY(-2px);
+}
+
+/* Mensagens */
+#login-message {
+    margin-top: 15px;
+    color: var(--primary-red);
+    font-size: 13px;
+    min-height: 18px; /* Evita que o card "pule" quando a mensagem aparece */
+}

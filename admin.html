@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Adm - Mirella Bays</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <nav class="admin-nav">
+            <button onclick="mostrarAba('aba-novo-usuario')">Novo Usuário</button>
+            <button onclick="mostrarAba('aba-lista-usuarios')">Usuários Ativos</button>
+            <button onclick="mostrarAba('aba-agenda-geral')">Agenda Geral</button>
+        </nav>
+
+        <main class="admin-content">
+            
+            <section id="aba-novo-usuario" class="tab-content">
+                <h2>Registrar Novo Aluno</h2>
+                <form id="form-cadastro-aluno">
+                    <div class="field">
+                        <label>Nome Completo:</label>
+                        <input type="text" id="reg-nome" required>
+                    </div>
+                    <div class="field">
+                        <label>Username (Login):</label>
+                        <input type="text" id="reg-user" required>
+                    </div>
+                    <div class="field">
+                        <label>Senha:</label>
+                        <input type="password" id="reg-senha" required>
+                    </div>
+                    <div class="field">
+                        <label>Nível de Proficiência:</label>
+                        <select id="reg-nivel">
+                            <option value="A1">A1 (Iniciante)</option>
+                            <option value="A2">A2 (Básico)</option>
+                            <option value="B1">B1 (Intermediário)</option>
+                            <option value="B2">B2 (Avançado)</option>
+                            <option value="C1">C1 (Proficiente)</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn-save" onclick="salvarNovoUsuario()">Cadastrar Aluno</button>
+                </form>
+            </section>
+
+            <section id="aba-lista-usuarios" class="tab-content" style="display:none;">
+                <h2>Gestão de Alunos Ativos</h2>
+                <div id="container-lista-alunos">
+                    <p>Carregando alunos...</p>
+                </div>
+
+                <div id="detalhes-aluno" class="detalhes-container" style="display:none;">
+                    <hr>
+                    <h3 id="nome-aluno-selecionado">Aluno: Nome</h3>
+                    
+                    <div class="acoes-admin">
+                        <h4>Ações de Gestão</h4>
+                        <button class="btn-danger" onclick="excluirUsuario()">Excluir Aluno</button>
+                        <select id="edit-nivel-aluno">
+                            <option value="A1">Mudar para A1</option>
+                            <option value="A2">Mudar para A2</option>
+                            <option value="B1">Mudar para B1</option>
+                            <option value="B2">Mudar para B2</option>
+                        </select>
+                        <button onclick="atualizarNivel()">Atualizar Nível</button>
+                    </div>
+
+                    <div class="mural-gestao">
+                        <h4>Mural do Aluno</h4>
+                        <textarea id="msg-mural" placeholder="Escrever nova mensagem no mural..."></textarea>
+                        <button onclick="publicarNoMural()">Publicar no Mural</button>
+                        <div id="lista-mural-aluno">
+                            </div>
+                    </div>
+
+                    <div class="agenda-gestao">
+                        <h4>Agendar Aula</h4>
+                        <input type="date" id="data-aula">
+                        <input type="time" id="hora-aula">
+                        <button onclick="agendarAula()">Marcar Aula</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="aba-agenda-geral" class="tab-content" style="display:none;">
+                <h2>Agenda Geral de Aulas</h2>
+                <div id="calendario-admin">
+                    </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
