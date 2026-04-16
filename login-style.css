@@ -101,6 +101,11 @@ button:hover {
     background-color: var(--dark-red);
     transform: translateY(-2px);
 }
+footer {
+    margin-top: auto;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
 
 /* Mensagens */
 #login-message {
