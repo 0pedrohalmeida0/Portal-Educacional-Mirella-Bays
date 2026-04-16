@@ -206,6 +206,11 @@ textarea {
 
 .tabela-agenda th {
     background-color: #333;
+    footer {
+    margin-top: auto;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
     color: white;
 }
 
