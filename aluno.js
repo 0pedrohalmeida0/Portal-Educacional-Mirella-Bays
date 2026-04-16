@@ -1,23 +1,23 @@
 const URL_API = "https://script.google.com/macros/s/AKfycbzPNg6hIov_h3CinoarDRsxJDsdukpdI6x1NPbq3f2saiadEuJBfG4XU32wvNKOwjaVwA/exec";
 
 async function carregarPortal() {
-    // 1. O RECEPCIONISTA: Busca o que o login salvou no "baú" (localStorage)
+    // 1. Busca o que o login salvou no localStorage
     const usuario = localStorage.getItem("usuarioLogado");
     const nivel = localStorage.getItem("nivelLogado");
 
-    // 2. ESCREVE NA TELA: Pega o nível e coloca no seu ID do HTML
+    // 2. Pega o nível e coloca no ID do HTML
     const labelNivel = document.getElementById('label-nivel');
     if (labelNivel) {
         labelNivel.innerText = "Nível: " + (nivel || "A1");
     }
 
-    // 3. SEGURANÇA: Se não tiver usuário logado, expulsa para o login
+    // 3. Se não tiver usuário logado, expulsa para o login
     if (!usuario) {
         window.location.href = "index.html";
         return;
     }
 
-    // 4. BUSCA O RESTO: Agora pede ao Google o Mural e a Agenda
+    // 4. Pede ao Google o Mural e a Agenda
     try {
         const response = await fetch(URL_API, {
             method: "POST",
