@@ -199,6 +199,7 @@ async function carregarAgendaGeral() {
             body: JSON.stringify({ tipo: "LISTAR_AGENDA_GERAL" })
         });
         const aulas = await response.json();
+        console.log("BRUTO DO GOOGLE:", aulas[0][1]);
 
         if (aulas.length === 0) {
             calendarioDiv.innerHTML = "<p>Não há aulas agendadas.</p>";
