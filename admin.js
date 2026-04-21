@@ -214,12 +214,18 @@ async function carregarAgendaGeral() {
         
         aulas.forEach(aula => {
             let dataExibicao = "---";
+            
             if (aula[1]) {
-                const partes = String(aula[1]).substring(0, 10).split('-');
+                // O console mostrou: "2026-04-30T03:00:00.000Z"
+                // O .split('T')[0] pega apenas o que vem antes do T: "2026-04-30"
+                const dataPura = String(aula[1]).split('T')[0]; 
+                const partes = dataPura.split('-');
+                
                 if (partes.length === 3) {
+                    // Inverte para o padrão brasileiro
                     dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
                 } else {
-                    dataExibicao = String(aula[1]); 
+                    dataExibicao = dataPura;
                 }
             }
 
