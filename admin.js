@@ -212,10 +212,20 @@ async function carregarAgendaGeral() {
         html += '<thead><tr><th>Aluno</th><th>Data</th><th>Hora</th></tr></thead><tbody>';
         
         aulas.forEach(aula => {
+            let dataExibicao = "---";
+            if (aula[1]) {
+                const partes = String(aula[1]).substring(0, 10).split('-');
+                if (partes.length === 3) {
+                    dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                } else {
+                    dataExibicao = String(aula[1]); 
+                }
+            }
+
             html += `
                 <tr>
                     <td><strong>${aula[0]}</strong></td>
-                    <td>${new Date(aula[1]).toLocaleDateString('pt-BR')}</td>
+                    <td>${dataExibicao}</td>
                     <td>${aula[2]}</td>
                 </tr>
             `;
