@@ -205,8 +205,8 @@ async function carregarAgendaGeral() {
             return;
         }
 
-        // Ordenar por data (opcional, mas ajuda a Mirella se organizar)
-        aulas.sort((a, b) => new Date(a[1]) - new Date(b[1]));
+        // Ordenação segura por texto (AAAA-MM-DD)
+        aulas.sort((a, b) => String(a[1]).localeCompare(String(b[1])));
 
         let html = '<table class="tabela-agenda">';
         html += '<thead><tr><th>Aluno</th><th>Data</th><th>Hora</th></tr></thead><tbody>';
