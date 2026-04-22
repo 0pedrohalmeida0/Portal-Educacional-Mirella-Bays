@@ -26,26 +26,56 @@ async function carregarPortal() {
                 username: usuario 
             })
         });
-        const dados = await response.json();
 
-        // Preenche o Mural
-        const mural = document.getElementById('conteudo-mural');
-        if (mural && dados.mural) {
-            mural.innerHTML = dados.mural.reverse().map(p => `
-                <div class="post-it">
-                    <p>${p[1]}</p>
-                    <small>${new Date(p[2]).toLocaleDateString()}</small>
-                </div>
-            `).join('');
-        }
+        const dados = await response.json(); // Aqui pegamos a resposta
 
-        // Preenche a Agenda
-        const agenda = document.getElementById('minha-agenda');
-        if (agenda && dados.agenda) {
-            agenda.innerHTML = dados.agenda.map(a => `
-                <div class="card-aula"><span>Dia ${a[1]} às ${a[2]}</span></div>
-            `).join('');
+        // --- AQUI COMEÇA A CORREÇÃO QUE VOCÊ PRECISA ---
+        
+        // 1. ATUALIZAR MURAL (Se você tiver um campo de mural)
+        document.getElementById('mural-texto').innerText = dados.mural || "Nenhum recado hoje.";
+
+        // 2. ATUALIZAR AGENDA DO ALUNO
+        const agendaDiv = document.getElementById('agenda-aluno');
+        
+        if (!dados.agenda || dados.agenda.length === 0) {
+            agendaDiv.innerHTML = "<p>Você não tem aulas agendadas.</p>";
+        } else {
+            let htmlAgenda = '<ul class="lista-agenda-aluno">';
+            
+            dados.agenda.forEach(aula => {
+                // TRATAMENTO DA DATA (A mesma "faca" do Admin)
+                let dataExibicao = "---";
+                if (aula[1]) {
+                    const dataPura = String(aula[1]).split('T')[0];
+                    const partes = dataPura.split('-');
+                    if (partes.length === 3) {
+                        dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                    }
+                }
+
+                // TRATAMENTO DA HORA (Remove o 1899)
+                let horaExibicao = "---";
+                if (aula[2]) {
+                    const horaBruta = String(aula[2]);
+                    if (horaBruta.includes('T')) {
+                        horaExibicao = horaBruta.split('T')[1].substring(0, 5);
+                    } else {
+                        horaExibicao = horaBruta;
+                    }
+                }
+
+                htmlAgenda += `<li>📅 <strong>${dataExibicao}</strong> às ⏰ ${horaExibicao}</li>`;
+            });
+            
+            htmlAgenda += '</ul>';
+            agendaDiv.innerHTML = htmlAgenda;
         }
+        // --- AQUI TERMINA A CORREÇÃO ---
+
+    } catch (e) {
+        console.error("Erro ao carregar dados do aluno:", e);
+        alert("Erro ao carregar suas informações.");
+    }
 
     } catch (e) {
         console.error("Erro ao carregar os dados da planilha:", e);
