@@ -213,21 +213,18 @@ async function carregarAgendaGeral() {
         html += '<thead><tr><th>Aluno</th><th>Data</th><th>Hora</th></tr></thead><tbody>';
         
         aulas.forEach(aula => {
-            console.log("TESTE DE DATA:", aula[1]); // Isso tem que aparecer no console
-            
             let dataExibicao = "---";
+            
             if (aula[1]) {
+               
                 const dataPura = String(aula[1]).split('T')[0]; 
                 const partes = dataPura.split('-');
                 
                 if (partes.length === 3) {
                     dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                } else {
+                    dataExibicao = String(aula[1]); 
                 }
-            }
-
-            // SE O NAVEGADOR ESTIVER RODANDO O CÓDIGO NOVO, VAI APARECER ESTE AVISO:
-            if (aula === aulas[0]) { 
-                alert("O código novo está rodando! Data processada: " + dataExibicao); 
             }
 
             html += `
