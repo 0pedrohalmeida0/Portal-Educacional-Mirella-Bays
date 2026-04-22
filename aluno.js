@@ -5,16 +5,21 @@ async function carregarPortal() {
     const usuario = localStorage.getItem("usuarioLogado");
     const nivel = localStorage.getItem("nivelLogado");
 
-    // 2. Pega o nível e coloca no ID do HTML
+    // 2. Proteção: Se não tiver usuário logado, expulsa para o login
+    if (!usuario) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    // 3. Coloca os dados básicos na tela (Nível e Nome)
     const labelNivel = document.getElementById('label-nivel');
     if (labelNivel) {
         labelNivel.innerText = "Nível: " + (nivel || "A1");
     }
 
-    // 3. Se não tiver usuário logado, expulsa para o login
-    if (!usuario) {
-        window.location.href = "index.html";
-        return;
+    const nomeDisplay = document.getElementById('nome-aluno'); // Verifique se esse ID existe no HTML
+    if (nomeDisplay) {
+        nomeDisplay.innerText = usuario;
     }
 
     // 4. Agora pede ao Google o Mural e a Agenda
@@ -27,15 +32,17 @@ async function carregarPortal() {
             })
         });
 
+        if (!response.ok) throw new Error("Erro na rede");
+
         const dados = await response.json();
 
-        // 1. ATUALIZAR MURAL
+        // --- ATUALIZAR MURAL ---
         const muralElement = document.getElementById('mural-texto');
         if (muralElement) {
             muralElement.innerText = dados.mural || "Nenhum recado hoje.";
         }
 
-        // 2. ATUALIZAR AGENDA DO ALUNO
+        // --- ATUALIZAR AGENDA DO ALUNO ---
         const agendaDiv = document.getElementById('agenda-aluno');
         
         if (agendaDiv) {
@@ -45,7 +52,7 @@ async function carregarPortal() {
                 let htmlAgenda = '<ul class="lista-agenda-aluno">';
                 
                 dados.agenda.forEach(aula => {
-                    // TRATAMENTO DA DATA
+                    // TRATAMENTO DA DATA (O corte do fuso horário)
                     let dataExibicao = "---";
                     if (aula[1]) {
                         const dataPura = String(aula[1]).split('T')[0];
@@ -55,7 +62,7 @@ async function carregarPortal() {
                         }
                     }
 
-                    // TRATAMENTO DA HORA
+                    // TRATAMENTO DA HORA (O corte do 1899)
                     let horaExibicao = "---";
                     if (aula[2]) {
                         const horaBruta = String(aula[2]);
@@ -76,8 +83,15 @@ async function carregarPortal() {
 
     } catch (e) {
         console.error("Erro ao carregar dados do aluno:", e);
+        // Se der erro, limpa o estado de "Carregando..."
+        if (document.getElementById('mural-texto')) {
+            document.getElementById('mural-texto').innerText = "Erro ao carregar recados.";
+        }
+        if (document.getElementById('agenda-aluno')) {
+            document.getElementById('agenda-aluno').innerHTML = "<p>Erro ao carregar agenda.</p>";
+        }
     }
-} // Fechamento da função carregarPortal
+}
 
 // Executa assim que a página terminar de carregar
 document.addEventListener('DOMContentLoaded', carregarPortal);
