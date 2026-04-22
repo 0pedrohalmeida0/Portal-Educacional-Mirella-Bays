@@ -20,21 +20,19 @@ async function carregarPortal() {
 
         const dados = await response.json();
 
-        // --- ATUALIZAÇÃO DO MURAL (PARA MOSTRAR VÁRIOS RECADOS) ---
+        // --- ATUALIZAÇÃO DO MURAL (CORRIGIDA) ---
         const muralElement = document.getElementById('mural-texto');
         if (muralElement) {
             if (!dados.mural || dados.mural.length === 0) {
                 muralElement.innerHTML = "Nenhum recado hoje.";
             } else {
-                // Se o Google mandar vários recados, eles virão como uma lista (Array)
-                // Se vier apenas um, transformamos em lista para o código não quebrar
+                // Transforma em lista se for um único recado, para o loop funcionar
                 const listaRecados = Array.isArray(dados.mural) ? dados.mural : [dados.mural];
                 
                 let htmlMural = '<ul style="list-style: none; padding: 0; margin: 0;">';
                 
                 listaRecados.forEach(item => {
                     const partes = String(item).split(',');
-                    // Pega o texto do recado (geralmente na segunda coluna)
                     const textoRecado = partes[1] ? partes[1].trim() : partes[0];
                     
                     if (textoRecado && textoRecado !== "undefined") {
@@ -43,7 +41,8 @@ async function carregarPortal() {
                 });
                 
                 htmlMural += '</ul>';
-                muralElement.innerHTML = htmlAgenda; // Se o ID for de um parágrafo, mude para .innerHTML
+                // AQUI ESTAVA O ERRO: Usei muralElement.innerHTML = htmlMural;
+                muralElement.innerHTML = htmlMural; 
             }
         }
         // Atualiza a Agenda
