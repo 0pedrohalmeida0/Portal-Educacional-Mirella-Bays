@@ -141,29 +141,47 @@ async function publicarNoMural() {
     }
 }
 
-// 7. AGENDAR AULA
-async function agendarAula() {
-    const data = document.getElementById('data-aula').value;
+// 7. AGENDAR AULA (NOVA VERSÃO COM RECORRÊNCIA)
+async function salvarAgendamento() {
+    // 1. Pega os novos campos que você colocou no HTML
+    const dataInicio = document.getElementById('data-inicio').value;
+    const dataFim = document.getElementById('data-fim').value;
     const hora = document.getElementById('hora-aula').value;
+    
+    // 2. Pega os dias da semana marcados (Segunda, Terça, etc.)
+    const checkboxes = document.querySelectorAll('#dias-semana input:checked');
+    const diasSemana = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
-    if (!alunoSelecionado) return alert("Selecione um aluno!");
-    if (!data || !hora) return alert("Preencha data e hora!");
+    // 3. Validações usando sua variável alunoSelecionado
+    if (!alunoSelecionado) return alert("Selecione um aluno na lista primeiro!");
+    if (!dataInicio || !dataFim || !hora) return alert("Preencha o período (Início/Fim) e o horário!");
+    if (diasSemana.length === 0) return alert("Selecione pelo menos um dia da semana!");
 
     try {
         const response = await fetch(URL_API, {
             method: "POST",
             body: JSON.stringify({
                 tipo: "AGENDAR_AULA",
-                username: alunoSelecionado,
-                data: data,
-                hora: hora
+                username: alunoSelecionado, // Sua variável global
+                dataInicio: dataInicio,
+                dataFim: dataFim,
+                hora: hora,
+                diasSemana: diasSemana
             })
         });
-        alert("Aula agendada com sucesso!");
-        document.getElementById('data-aula').value = "";
+
+        const resultado = await response.json();
+        alert(resultado); // Vai mostrar ex: "8 aulas agendadas!"
+
+        // Limpa os campos para o próximo agendamento
+        document.getElementById('data-inicio').value = "";
+        document.getElementById('data-fim').value = "";
         document.getElementById('hora-aula').value = "";
+        checkboxes.forEach(cb => cb.checked = false);
+
     } catch (e) {
-        alert("Erro ao agendar aula.");
+        console.error(e);
+        alert("Erro ao agendar as aulas.");
     }
 }
 
