@@ -199,38 +199,33 @@ async function carregarAgendaGeral() {
             body: JSON.stringify({ tipo: "LISTAR_AGENDA_GERAL" })
         });
         const aulas = await response.json();
-        console.log("BRUTO DO GOOGLE:", aulas[0][1]);
 
-        if (aulas.length === 0) {
+        if (!aulas || aulas.length === 0) {
             calendarioDiv.innerHTML = "<p>Não há aulas agendadas.</p>";
             return;
         }
 
-        // Ordenação segura por texto (AAAA-MM-DD)
+        // Ordenação segura
         aulas.sort((a, b) => String(a[1]).localeCompare(String(b[1])));
 
         let html = '<table class="tabela-agenda">';
         html += '<thead><tr><th>Aluno</th><th>Data</th><th>Hora</th></tr></thead><tbody>';
         
-        aulas.forEach(aula => {
+        aulas.forEach((aula, index) => {
             let dataExibicao = "---";
-            
             if (aula[1]) {
-               
                 const dataPura = String(aula[1]).split('T')[0]; 
                 const partes = dataPura.split('-');
-                
                 if (partes.length === 3) {
                     dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
-                } else {
-                    dataExibicao = String(aula[1]); 
                 }
             }
 
+            // Adicionado um ID único para cada célula de data para monitorar
             html += `
                 <tr>
                     <td><strong>${aula[0]}</strong></td>
-                    <td>${dataExibicao}</td>
+                    <td id="data-celula-${index}">${dataExibicao}</td>
                     <td>${aula[2]}</td>
                 </tr>
             `;
@@ -240,6 +235,7 @@ async function carregarAgendaGeral() {
         calendarioDiv.innerHTML = html;
 
     } catch (e) {
+        console.error("Erro fatal na agenda:", e);
         calendarioDiv.innerHTML = "<p>Erro ao carregar agenda.</p>";
     }
 }
