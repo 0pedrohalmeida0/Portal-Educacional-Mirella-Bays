@@ -20,18 +20,31 @@ async function carregarPortal() {
 
         const dados = await response.json();
 
-        // --- AJUSTE DO MURAL (Para limpar as vírgulas e textos extras) ---
-        const mural = document.getElementById('mural-texto');
-        if (mural) {
-            let recadoLimpo = "Nenhum recado hoje.";
-            
-            if (dados.mural) {
-                // O split(',') corta a linha do Google nas vírgulas
-                const partes = String(dados.mural).split(',');
-                // Pegamos a segunda parte (o recado) se ela existir, senão a primeira.
-                recadoLimpo = partes[1] ? partes[1].trim() : partes[0];
+        // --- ATUALIZAÇÃO DO MURAL (PARA MOSTRAR VÁRIOS RECADOS) ---
+        const muralElement = document.getElementById('mural-texto');
+        if (muralElement) {
+            if (!dados.mural || dados.mural.length === 0) {
+                muralElement.innerHTML = "Nenhum recado hoje.";
+            } else {
+                // Se o Google mandar vários recados, eles virão como uma lista (Array)
+                // Se vier apenas um, transformamos em lista para o código não quebrar
+                const listaRecados = Array.isArray(dados.mural) ? dados.mural : [dados.mural];
+                
+                let htmlMural = '<ul style="list-style: none; padding: 0; margin: 0;">';
+                
+                listaRecados.forEach(item => {
+                    const partes = String(item).split(',');
+                    // Pega o texto do recado (geralmente na segunda coluna)
+                    const textoRecado = partes[1] ? partes[1].trim() : partes[0];
+                    
+                    if (textoRecado && textoRecado !== "undefined") {
+                        htmlMural += `<li style="margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dotted #ccc;">📢 ${textoRecado}</li>`;
+                    }
+                });
+                
+                htmlMural += '</ul>';
+                muralElement.innerHTML = htmlAgenda; // Se o ID for de um parágrafo, mude para .innerHTML
             }
-            mural.innerText = recadoLimpo;
         }
         // Atualiza a Agenda
         const agendaDiv = document.getElementById('agenda-aluno');
