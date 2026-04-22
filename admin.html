@@ -77,11 +77,35 @@
                     </div>
 
                     <div class="agenda-gestao">
-                        <h4>Agendar Aula</h4>
-                        <input type="date" id="data-aula">
-                        <input type="time" id="hora-aula">
-                        <button onclick="agendarAula()">Marcar Aula</button>
-                    </div>
+    <h4>Agendar Aulas (Recorrência)</h4>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <div style="flex: 1;">
+            <label style="font-size: 12px; display: block;">Início:</label>
+            <input type="date" id="data-inicio" style="width: 100%;">
+        </div>
+        <div style="flex: 1;">
+            <label style="font-size: 12px; display: block;">Fim:</label>
+            <input type="date" id="data-fim" style="width: 100%;">
+        </div>
+    </div>
+
+    <label style="font-size: 12px; display: block;">Horário:</label>
+    <input type="time" id="hora-aula" style="width: 100%; margin-bottom: 10px;">
+
+    <label style="font-size: 12px; display: block; margin-bottom: 5px;">Dias da Semana:</label>
+    <div id="dias-semana" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+        <label style="font-size: 13px;"><input type="checkbox" value="1"> Seg</label>
+        <label style="font-size: 13px;"><input type="checkbox" value="2"> Ter</label>
+        <label style="font-size: 13px;"><input type="checkbox" value="3"> Qua</label>
+        <label style="font-size: 13px;"><input type="checkbox" value="4"> Qui</label>
+        <label style="font-size: 13px;"><input type="checkbox" value="5"> Sex</label>
+        <label style="font-size: 13px;"><input type="checkbox" value="6"> Sáb</label>
+        <label style="font-size: 13px;"><input type="checkbox" value="0"> Dom</label>
+    </div>
+
+    <button onclick="salvarAgendamento()" style="width: 100%; background-color: #28a745;">Marcar Aulas</button>
+</div>
                 </div>
             </section>
 
