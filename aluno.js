@@ -27,60 +27,57 @@ async function carregarPortal() {
             })
         });
 
-        const dados = await response.json(); // Aqui pegamos a resposta
+        const dados = await response.json();
 
-        // --- AQUI COMEÇA A CORREÇÃO QUE VOCÊ PRECISA ---
-        
-        // 1. ATUALIZAR MURAL (Se você tiver um campo de mural)
-        document.getElementById('mural-texto').innerText = dados.mural || "Nenhum recado hoje.";
+        // 1. ATUALIZAR MURAL
+        const muralElement = document.getElementById('mural-texto');
+        if (muralElement) {
+            muralElement.innerText = dados.mural || "Nenhum recado hoje.";
+        }
 
         // 2. ATUALIZAR AGENDA DO ALUNO
         const agendaDiv = document.getElementById('agenda-aluno');
         
-        if (!dados.agenda || dados.agenda.length === 0) {
-            agendaDiv.innerHTML = "<p>Você não tem aulas agendadas.</p>";
-        } else {
-            let htmlAgenda = '<ul class="lista-agenda-aluno">';
-            
-            dados.agenda.forEach(aula => {
-                // TRATAMENTO DA DATA (A mesma "faca" do Admin)
-                let dataExibicao = "---";
-                if (aula[1]) {
-                    const dataPura = String(aula[1]).split('T')[0];
-                    const partes = dataPura.split('-');
-                    if (partes.length === 3) {
-                        dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        if (agendaDiv) {
+            if (!dados.agenda || dados.agenda.length === 0) {
+                agendaDiv.innerHTML = "<p>Você não tem aulas agendadas.</p>";
+            } else {
+                let htmlAgenda = '<ul class="lista-agenda-aluno">';
+                
+                dados.agenda.forEach(aula => {
+                    // TRATAMENTO DA DATA
+                    let dataExibicao = "---";
+                    if (aula[1]) {
+                        const dataPura = String(aula[1]).split('T')[0];
+                        const partes = dataPura.split('-');
+                        if (partes.length === 3) {
+                            dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                        }
                     }
-                }
 
-                // TRATAMENTO DA HORA (Remove o 1899)
-                let horaExibicao = "---";
-                if (aula[2]) {
-                    const horaBruta = String(aula[2]);
-                    if (horaBruta.includes('T')) {
-                        horaExibicao = horaBruta.split('T')[1].substring(0, 5);
-                    } else {
-                        horaExibicao = horaBruta;
+                    // TRATAMENTO DA HORA
+                    let horaExibicao = "---";
+                    if (aula[2]) {
+                        const horaBruta = String(aula[2]);
+                        if (horaBruta.includes('T')) {
+                            horaExibicao = horaBruta.split('T')[1].substring(0, 5);
+                        } else {
+                            horaExibicao = horaBruta;
+                        }
                     }
-                }
 
-                htmlAgenda += `<li>📅 <strong>${dataExibicao}</strong> às ⏰ ${horaExibicao}</li>`;
-            });
-            
-            htmlAgenda += '</ul>';
-            agendaDiv.innerHTML = htmlAgenda;
+                    htmlAgenda += `<li>📅 <strong>${dataExibicao}</strong> às ⏰ ${horaExibicao}</li>`;
+                });
+                
+                htmlAgenda += '</ul>';
+                agendaDiv.innerHTML = htmlAgenda;
+            }
         }
-        // --- AQUI TERMINA A CORREÇÃO ---
 
     } catch (e) {
         console.error("Erro ao carregar dados do aluno:", e);
-        alert("Erro ao carregar suas informações.");
     }
-
-    } catch (e) {
-        console.error("Erro ao carregar os dados da planilha:", e);
-    }
-}
+} // Fechamento da função carregarPortal
 
 // Executa assim que a página terminar de carregar
 document.addEventListener('DOMContentLoaded', carregarPortal);
