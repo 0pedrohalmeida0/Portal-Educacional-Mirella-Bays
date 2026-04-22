@@ -211,22 +211,34 @@ async function carregarAgendaGeral() {
         let html = '<table class="tabela-agenda">';
         html += '<thead><tr><th>Aluno</th><th>Data</th><th>Hora</th></tr></thead><tbody>';
         
-        aulas.forEach((aula, index) => {
+        aulas.forEach(aula => {
+            // 1. TRATAMENTO DA DATA
             let dataExibicao = "---";
             if (aula[1]) {
-                const dataPura = String(aula[1]).split('T')[0]; 
+                const dataPura = String(aula[1]).split('T')[0];
                 const partes = dataPura.split('-');
                 if (partes.length === 3) {
                     dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
                 }
             }
 
-            // Adicionado um ID único para cada célula de data para monitorar
+            // 2. TRATAMENTO DA HORA (Para sumir com o 1899)
+            let horaExibicao = "---";
+            if (aula[2]) {
+                const horaBruta = String(aula[2]);
+                if (horaBruta.includes('T')) {
+                    // Pega o que está DEPOIS do T (09:51:28) e corta os segundos
+                    horaExibicao = horaBruta.split('T')[1].substring(0, 5);
+                } else {
+                    horaExibicao = horaBruta; // Caso já venha limpo
+                }
+            }
+
             html += `
                 <tr>
                     <td><strong>${aula[0]}</strong></td>
-                    <td id="data-celula-${index}">${dataExibicao}</td>
-                    <td>${aula[2]}</td>
+                    <td>${dataExibicao}</td>
+                    <td>${horaExibicao}</td>
                 </tr>
             `;
         });
