@@ -10,5 +10,5 @@ Para acompanhar a evolução do projeto, o portal foi completamente reestruturad
 
 Todo o desenvolvimento ativo, histórico de commits, novos recursos e a documentação completa da nova arquitetura estão centralizados aqui:
 
-👉 **[CLIQUE AQUI PARA ACESSAR O NOVO REPOSITÓRIO DO PORTAL DA MIRELLA]([COLOQUE_O_LINK_DO_SEU_REPOSITORIO_NOVO_AQUI](https://github.com/0pedrohalmeida0/PortalMirellaBays))**
+👉 **[CLIQUE AQUI PARA ACESSAR O NOVO REPOSITÓRIO DO PORTAL DA MIRELLA](https://github.com/0pedrohalmeida0/PortalMirellaBays))**
 
